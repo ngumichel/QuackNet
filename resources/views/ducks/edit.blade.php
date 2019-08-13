@@ -8,7 +8,8 @@
                     <div class="card-header text-white bg-dark">{{ __('Register') }}</div>
 
                     <div class="card-body">
-                        <form method="PUT" action="{{ route('ducks.prupdate') }}">
+                        <form method="POST" action="{{ route('ducks.prupdate') }}">
+                            @method('PUT')
                             @csrf
 
                             <div class="form-group row">

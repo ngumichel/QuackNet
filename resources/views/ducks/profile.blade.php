@@ -51,7 +51,7 @@
                                 <a class="btn btn-primary mr-2" href="{{ route('ducks.predit') }}">
                                     Edit
                                 </a>
-                                <a class="btn btn-primary mr-2" href="{{ 'ducks/password' }}">
+                                <a class="btn btn-primary mr-2" href="{{ '/ducks/password' }}">
                                     Change password
                                 </a>
                             </div>

@@ -39,10 +39,10 @@
                         <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/quacks/create">Quacks</a>
+                        <a class="nav-link" href="{{ route('quacks.index') }}">Quacks</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ducks/create">Ducks</a>
+                        <a class="nav-link" href="{{ route('ducks.index') }}">Ducks</a>
                     </li>
                 </ul>
 

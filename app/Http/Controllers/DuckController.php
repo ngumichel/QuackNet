@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 
 class DuckController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -49,7 +54,7 @@ class DuckController extends Controller
     public function show(Duck $duck)
     {
         //dd($duck);
-        return view('ducks.show', compact('duck'));
+        return view('ducks.show', ['duck' => $duck]);
     }
 
     /**
@@ -61,7 +66,7 @@ class DuckController extends Controller
     public function edit()
     {
         $duck = Auth::user();
-        return view('ducks.edit', compact('duck'));
+        return view('ducks.edit', ['duck' => $duck]);
     }
 
     /**
@@ -74,18 +79,20 @@ class DuckController extends Controller
     public function update(Request $request)
     {
         $duck = Auth::user();
-        /*$validated = $request->validate([
-            'firstname' => 'require|max:255',
-            'lastname' => 'require|max:255',
-            'email' => 'require|email',
-        ]);*/
+        $this->validate($request, [
+            'firstname' => 'required|max:255',
+            'lastname' => 'required|max:255',
+            'email' => 'required|email',
+        ]);
 
-        $duck->firstname = $request->firstname;
-        //$duck->
+        $duck->firstname = $request->input('firstname');
+        $duck->lastname = $request->input('lastname');
+        $duck->email = $request->input('email');
 
-        $duck->update();
+        $duck->save();
 
-        return view('ducks.profile', compact('duck'));    }
+        return redirect()->route('ducks.profile');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -102,4 +109,6 @@ class DuckController extends Controller
         $duck = Auth::user();
         return view('ducks.profile', compact('duck'));
     }
+
+
 }
