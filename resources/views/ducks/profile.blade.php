@@ -12,7 +12,6 @@
                     <div class="card-header text-white bg-dark">{{ $duck->duckname }}</div>
 
                     <div class="card-body">
-
                         @csrf
 
                         <div class="form-group row">
@@ -48,10 +47,10 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <a class="btn btn-primary mr-2" href="{{ route('ducks.predit') }}">
+                                <a class="btn btn-primary mr-2" href="{{ route('ducks.edit') }}">
                                     Edit
                                 </a>
-                                <a class="btn btn-primary mr-2" href="{{ '/ducks/password' }}">
+                                <a class="btn btn-primary mr-2" href="{{ route('ducks.password') }}">
                                     Change password
                                 </a>
                             </div>

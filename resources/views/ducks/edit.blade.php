@@ -8,7 +8,7 @@
                     <div class="card-header text-white bg-dark">{{ __('Register') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('ducks.prupdate') }}">
+                        <form method="POST" action="{{ route('ducks.update') }}">
                             @method('PUT')
                             @csrf
 
@@ -17,7 +17,8 @@
 
                                 <div class="col-md-6">
                                     <input id="firstname" type="text"
-                                           class="form-control @error('firstname') is-invalid @enderror" name="firstname"
+                                           class="form-control @error('firstname') is-invalid @enderror"
+                                           name="firstname"
                                            value="{{ $duck->firstname }}" required autocomplete="firstname" autofocus>
 
                                     @error('firstname')

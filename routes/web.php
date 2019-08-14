@@ -12,21 +12,23 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('ducks/password', 'Auth\ChangePasswordController@showChangeForm')->name('ducks.password');
 Route::get('ducks/change', 'Auth\ChangePasswordController@passwordChange')->name('ducks.change');
-Route::resource('quacks', 'QuackController')->only([
-    'index', 'show',
-]);
+Route::resource('quacks', 'QuackController');
 
 Route::get('ducks/profile', 'DuckController@profile')->name('ducks.profile');
-Route::get('ducks/profile/edit', 'DuckController@edit')->name('ducks.predit');
-Route::put('ducks/profile/update', 'DuckController@update')->name('ducks.prupdate');
+Route::get('ducks/profile/edit', 'DuckController@edit')->name('ducks.edit');
+Route::put('ducks/profile/update', 'DuckController@update')->name('ducks.update');
 
-Route::resource('ducks', 'DuckController');
+Route::resource('ducks', 'DuckController')->only([
+    'index', 'show'
+]);
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+

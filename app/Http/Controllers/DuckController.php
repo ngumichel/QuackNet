@@ -102,13 +102,12 @@ class DuckController extends Controller
      */
     public function destroy(Duck $duck)
     {
-
+        //
     }
 
     public function profile() {
         $duck = Auth::user();
         return view('ducks.profile', compact('duck'));
     }
-
 
 }
