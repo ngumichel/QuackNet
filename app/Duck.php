@@ -60,4 +60,13 @@ class Duck extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the quacks for the user.
+     */
+    public function quacks()
+    {
+        return $this->hasMany('App\Quack');
+    }
+
 }

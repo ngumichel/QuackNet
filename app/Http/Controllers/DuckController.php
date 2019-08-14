@@ -14,6 +14,7 @@ class DuckController extends Controller
     {
         $this->middleware('auth')->except(['index', 'show']);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +22,7 @@ class DuckController extends Controller
      */
     public function index()
     {
-        //
+        return view('ducks.index');
     }
 
     /**

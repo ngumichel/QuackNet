@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDucksTable extends Migration
+class CreateQuacksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateDucksTable extends Migration
      */
     public function up()
     {
-        Schema::create('ducks', function (Blueprint $table) {
+        Schema::create('quacks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('duckname')->unique();
-            $table->string('icon')->nullable();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
+            $table->text('content');
+            $table->string('image')->nullable();
+            $table->string('tags')->nullable();
             $table->timestamps();
+
+            $table->unsignedBigInteger('duck_id');
+            $table->foreign('duck_id')->references('id')->on('ducks');
         });
     }
 
@@ -33,6 +32,6 @@ class CreateDucksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ducks');
+        Schema::dropIfExists('quacks');
     }
 }

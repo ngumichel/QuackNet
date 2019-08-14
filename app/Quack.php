@@ -22,5 +22,30 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Quack extends Model
 {
-    //
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'content', 'image', 'tags', 'duck_id',
+    ];
+
+    /**
+     * Get the duck that owns the quack.
+     */
+    public function duck()
+    {
+        return $this->belongsTo('App\Duck');
+    }
+
+    /**
+     * Get the comments for the quack post.
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
 }
