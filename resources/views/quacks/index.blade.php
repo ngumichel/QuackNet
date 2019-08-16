@@ -22,7 +22,6 @@
 </div>
 
 @foreach($quacks as $quack)
-
     <div class="container">
         <div class="row justify-content-center">
             <div class="card col-8 m-3 p-0">
@@ -36,17 +35,26 @@
                 </div>
 
                 <div class="card-footer text-white bg-dark">
+                    @if($quack->duck->id == $duck->id)
+                        <form class="form" action="{{ route('quacks.destroy', $quack) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm mr-2" style="float: right">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    @endif
                     <a class="text-white" href="{{ route('quacks.show', $quack) }}">
                         <i class="far fa-comment-alt"></i>
-                        {{ $quack->comments->count() }}
+                        {{ $quack->replies->count() }}
                     </a>
                     <a class="btn btn-primary btn-sm mr-2" style="float: right"
-                       href="{{ route('ducks.password') }}">
+                       href="{{ route('quacks.create') }}">
                         <i class="fas fa-comment-alt"></i>
                         Reply
                     </a>
                 </div>
             </div>
         </div>
-    </div>
+    </div>-
 @endforeach

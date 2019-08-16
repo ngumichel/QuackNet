@@ -41,11 +41,19 @@ class Quack extends Model
     }
 
     /**
-     * Get the comments for the quack post.
+     * Get the quack for the reply post.
      */
-    public function comments()
+    public function og_quack()
     {
-        return $this->hasMany('App\Comment');
+        return $this->belongsTo('App\Quack', 'parent_id');
+    }
+
+    /**
+     * Get the replies for the quack post.
+     */
+    public function replies()
+    {
+        return $this->hasMany('App\Quack', 'parent_id');
     }
 
 }

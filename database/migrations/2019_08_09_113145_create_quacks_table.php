@@ -20,6 +20,9 @@ class CreateQuacksTable extends Migration
             $table->string('tags')->nullable();
             $table->timestamps();
 
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('quacks');
+
             $table->unsignedBigInteger('duck_id');
             $table->foreign('duck_id')->references('id')->on('ducks');
         });

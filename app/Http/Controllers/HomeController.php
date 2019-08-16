@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $duck = Auth::user();
-        $quacks = Quack::with('duck', 'comments')->get();
+        $quacks = Quack::with('duck', 'replies')->orderByDesc('id')->get();
         return view('home', ['duck' => $duck, 'quacks' => $quacks]);
     }
 }

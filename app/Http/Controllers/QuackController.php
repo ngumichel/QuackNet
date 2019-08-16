@@ -50,9 +50,12 @@ class QuackController extends Controller
         //dd($request);
         $this->validate($request, [
             'content' => 'required',
-            'image' => 'image|nullable',
+            'image' => 'nullable|image',
             'tags' => 'nullable|string',
             'duck_id' => [
+                Rule::exists($quack->getTable(), $quack->getKeyName()),
+            ],
+            'parent_id' => [
                 Rule::exists($quack->getTable(), $quack->getKeyName()),
             ]
         ]);
@@ -60,10 +63,11 @@ class QuackController extends Controller
         $quack->content = $request->input('content');
         $quack->image = $request->input('image');
         $quack->tags = $request->input('tags');
+        $quack->parent_id = $request->input('reply_id');
         $quack->duck_id = $duck->id;
         $quack->save();
 
-        return view('home.index');
+        return redirect()->route('home');
     }
 
     /**
@@ -105,10 +109,12 @@ class QuackController extends Controller
      *
      * @param \App\Quack $quack
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Quack $quack)
     {
-        //
+        $quack->delete();
+        return redirect()->route('home')->with('message', 'Quack deleted.');
     }
 
 }
