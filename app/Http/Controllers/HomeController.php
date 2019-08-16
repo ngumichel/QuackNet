@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Quack;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $duck = Auth::user();
-        return view('home', ['duck' => $duck]);
+        $quacks = Quack::with('duck', 'comments')->get();
+        return view('home', ['duck' => $duck, 'quacks' => $quacks]);
     }
 }

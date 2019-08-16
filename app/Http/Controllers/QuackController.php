@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Duck;
 use App\Quack;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class QuackController extends Controller
 {
@@ -44,28 +44,26 @@ class QuackController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-        $this->validate($request, [
-            'content' => 'required',
-            'image' => 'image',
-            'tags' => 'string',
-            'duck_id' => 'required|integer'
-        ]);
 
         $duck = Auth::user();
-
         $quack = new Quack;
-
+        //dd($request);
+        $this->validate($request, [
+            'content' => 'required',
+            'image' => 'image|nullable',
+            'tags' => 'nullable|string',
+            'duck_id' => [
+                Rule::exists($quack->getTable(), $quack->getKeyName()),
+            ]
+        ]);
+        //dd($request);
         $quack->content = $request->input('content');
         $quack->image = $request->input('image');
         $quack->tags = $request->input('tags');
         $quack->duck_id = $duck->id;
-
         $quack->save();
 
-        $quacks = Quack::with('duck')->get();
-
-        return view('quacks.index', ['quacks' => $quacks]);
+        return view('home.index');
     }
 
     /**
@@ -76,7 +74,7 @@ class QuackController extends Controller
      */
     public function show(Quack $quack)
     {
-        //
+        return view('quacks.show', ['quack' => $quack]);
     }
 
     /**
