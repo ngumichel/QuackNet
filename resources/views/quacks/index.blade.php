@@ -1,25 +1,27 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <form class="form col-8 pl-0 pr-0" method="POST" action="{{ route('quacks.store') }}">
-            @csrf
-            <div class="row align-items-center">
-                <div class="form-group col-10">
+@if($duck)
+    <div class="container">
+        <div class="row justify-content-center">
+            <form class="form col-8 pl-0 pr-0 " method="POST" action="{{ route('quacks.store') }}">
+                @csrf
+                <div class="row align-items-center">
+                    <div class="form-group col-10">
                         <textarea class="form-control" id="content" name="content" rows="3"
                                   placeholder="publish something..."></textarea>
-                </div>
-                <div class="form-group col-2 text-center align-items-center">
-                    <div class="custom-media btn btn-block btn-outline-primary mb-2">
-                        <i class="fas fa-upload"></i> Media
-                        <input type="file" class="form-control-file custom-input" id="image" name="image">
                     </div>
-                    <div class="mt-2">
-                        <button type="submit" class="btn btn-block btn-primary">Publish</button>
+                    <div class="form-group col-2 text-center align-items-center">
+                        <div class="custom-media btn btn-block btn-outline-primary mb-2">
+                            <i class="fas fa-upload"></i> Media
+                            <input type="file" class="form-control-file custom-input" id="image" name="image">
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit" class="btn btn-block btn-primary">Publish</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+@endif
 
 @foreach($quacks as $quack)
     <div class="container">
@@ -35,26 +37,28 @@
                 </div>
 
                 <div class="card-footer text-white bg-dark">
-                    @if($quack->duck->id == $duck->id)
-                        <form class="form" action="{{ route('quacks.destroy', $quack) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm mr-2" style="float: right">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </form>
+                    @if($duck)
+                        @if($quack->duck->id == $duck->id)
+                            <form class="form" action="{{ route('quacks.destroy', $quack) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm mr-2" style="float: right">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        @endif
+                        <a class="btn btn-primary btn-sm mr-2" style="float: right"
+                           href="{{ route('quacks.reply', $quack) }}">
+                            <i class="fas fa-comment-alt"></i>
+                            Reply
+                        </a>
                     @endif
                     <a class="text-white" href="{{ route('quacks.show', $quack) }}">
                         <i class="far fa-comment-alt"></i>
                         {{ $quack->replies->count() }}
                     </a>
-                    <a class="btn btn-primary btn-sm mr-2" style="float: right"
-                       href="{{ route('quacks.create') }}">
-                        <i class="fas fa-comment-alt"></i>
-                        Reply
-                    </a>
                 </div>
             </div>
         </div>
-    </div>-
+    </div>
 @endforeach

@@ -1,11 +1,16 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ $duck->duckname }} Homepage
+    @if($duck)
+        {{ $duck->duckname }}
+    @else
+        Guest
+    @endif
+    Homepage
 @endsection
 
 @section('content')
 
-   @include('quacks.index')
+    @include('quacks.index')
 
 @endsection

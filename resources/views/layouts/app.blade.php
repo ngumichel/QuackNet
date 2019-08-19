@@ -86,6 +86,13 @@
     </nav>
 
     <main class="py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-8 pl-0 pr-0">
+                    @include('flash')
+                </div>
+            </div>
+        </div>
         @yield('content')
     </main>
 </div>
