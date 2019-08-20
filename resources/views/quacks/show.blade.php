@@ -16,9 +16,9 @@
                     @endif
                     <p class="card-text text-right" style="font-size: smaller">
                         @if($quack->created_at == $quack->updated_at)
-                            {{ $quack->created_at }}
+                            created at {{ $quack->created_at }}
                         @else
-                            {{ $quack->updated_at }}
+                            updated at {{ $quack->updated_at }}
                         @endif
                     </p>
                 </div>

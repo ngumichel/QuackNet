@@ -14,7 +14,13 @@
                     @if($quack->image != null)
                         <img src="{{ $quack->image }}" class="card-img-top" style="max-width: 50%" alt="...">
                     @endif
-                    <p class="card-text text-right" style="font-size: smaller">{{ $quack->created_at }}</p>
+                    <p class="card-text text-right" style="font-size: smaller">
+                        @if($quack->created_at == $quack->updated_at)
+                            created at {{ $quack->created_at }}
+                        @else
+                            updated at {{ $quack->updated_at }}
+                        @endif
+                    </p>
                 </div>
 
                 @if($quacks->count() != 0)
