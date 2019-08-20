@@ -12,7 +12,7 @@ class QuackController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('show');
     }
 
     /**
@@ -36,7 +36,8 @@ class QuackController extends Controller
     public function create(Quack $quack)
     {
         $duck = Auth::user();
-        return view('quacks.reply', ['quack' => $quack, 'duck' => $duck]);
+        $quacks = Quack::with('duck')->where('parent_id', $quack->id)->get();
+        return view('quacks.reply', ['quack' => $quack, 'quacks' => $quacks, 'duck' => $duck]);
     }
 
     /**
@@ -80,7 +81,8 @@ class QuackController extends Controller
      */
     public function show(Quack $quack)
     {
-        return view('quacks.show', ['quack' => $quack]);
+        $quacks = Quack::with('duck')->where('parent_id', $quack->id)->get();
+        return view('quacks.show', ['quack' => $quack, 'quacks' => $quacks]);
     }
 
     /**
@@ -91,8 +93,10 @@ class QuackController extends Controller
      */
     public function edit(Quack $quack)
     {
-        return view('quacks.edit');
+        $quacks = Quack::with('duck')->where('parent_id', $quack->id)->get();
+        return view('quacks.edit', ['quack' => $quack, 'quacks' => $quacks]);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -102,6 +106,41 @@ class QuackController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Quack $quack)
+    {
+        $this->validate($request, [
+            'content' => 'required',
+            'image' => 'nullable|image',
+            'tags' => 'nullable|string',
+        ]);
+
+        $quack->content = $request->input('content');
+        $quack->image = $request->input('image');
+        $quack->tags = $request->input('tags');
+        $quack->save();
+
+        return redirect()->route('quacks.show', ['quack' => $quack])->with('success', 'Quack edited.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \App\Quack $quack
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function destroy(Quack $quack)
+    {
+        $quack->delete();
+        return redirect()->route('home')->with('success', 'Quack deleted.');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function reply_store(Request $request, Quack $quack)
     {
         $duck = Auth::user();
         $qck = new Quack;
@@ -126,7 +165,7 @@ class QuackController extends Controller
         $qck->save();
 
         $quacks = Quack::with('duck', 'replies')->where('parent_id', $quack->id)->orderByDesc('id')->get();
-        return view('quacks.reply', ['duck' => $duck, 'quacks' => $quacks]);
+        return view('quacks.reply', ['duck' => $duck, 'quack' => $quack, 'quacks' => $quacks]);
     }
 
     /**
@@ -136,10 +175,10 @@ class QuackController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Quack $quack)
+    public function reply_destroy(Quack $quack)
     {
         $quack->delete();
-        return redirect()->route('home')->with('success', 'Quack deleted.');
+        return back()->with('success', 'Quack deleted.');
     }
 
 }

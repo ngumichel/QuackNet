@@ -22,15 +22,16 @@ Route::get('ducks/change', 'Auth\ChangePasswordController@passwordChange')->name
 
 Route::get('ducks/profile', 'DuckController@profile')->name('ducks.profile');
 Route::get('ducks/profile/edit', 'DuckController@edit')->name('ducks.edit');
-Route::put('ducks/profile/update', 'DuckController@update')->name('ducks.update');
+Route::put('ducks/profile/edit', 'DuckController@update')->name('ducks.update');
 
 Route::resource('ducks', 'DuckController')->only([
     'index', 'show'
 ]);
 
+Route::get('quacks/{quack}/reply', 'QuackController@create')->name('reply.create');
+Route::post('quacks/{quack}/reply', 'QuackController@reply_store')->name('reply.store');
+Route::delete('quacks/{quack}/reply', 'QuackController@reply_destroy')->name('reply.destroy');
 Route::resource('quacks', 'QuackController');
-
-Route::get('quacks/{quack}/reply', 'QuackController@create')->name('quacks.reply');
 
 Auth::routes();
 
