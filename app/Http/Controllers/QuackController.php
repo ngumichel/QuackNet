@@ -131,52 +131,6 @@ class QuackController extends Controller
     public function destroy(Quack $quack)
     {
         $quack->delete();
-        return redirect()->route('home')->with('success', 'Quack deleted.');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function reply_store(Request $request, Quack $quack)
-    {
-        $duck = Auth::user();
-        $qck = new Quack;
-        //dd($request);
-        $this->validate($request, [
-            'content' => 'required',
-            'image' => 'nullable|image',
-            'tags' => 'nullable|string',
-            'duck_id' => [
-                Rule::exists($qck->getTable(), $qck->getKeyName()),
-            ],
-            'parent_id' => [
-                Rule::exists($qck->getTable(), $qck->getKeyName()),
-            ]
-        ]);
-        //dd($request);
-        $qck->content = $request->input('content');
-        $qck->image = $request->input('image');
-        $qck->tags = $request->input('tags');
-        $qck->parent_id = $request->input('reply_id');
-        $qck->duck_id = $duck->id;
-        $qck->save();
-
-        return back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Quack $quack
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
-     */
-    public function reply_destroy(Quack $quack)
-    {
-        $quack->delete();
         return back()->with('success', 'Quack deleted.');
     }
 

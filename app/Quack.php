@@ -67,6 +67,4 @@ class Quack extends Model
         return $this->hasMany('App\Quack', 'parent_id');
     }
 
-
-
 }

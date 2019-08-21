@@ -44,6 +44,12 @@
                     </li>
                 </ul>
 
+                <form class="form-inline my-2 my-lg-0" action="{{ route('search.index') }}" method="GET" >
+                    @csrf
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->

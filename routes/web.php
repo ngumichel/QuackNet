@@ -31,9 +31,9 @@ Route::resource('ducks', 'DuckController')->only([
 ]);
 
 Route::get('quacks/{quack}/reply', 'QuackController@create')->name('reply.create');
-Route::post('quacks/{quack}/reply', 'QuackController@reply_store')->name('reply.store');
-Route::delete('quacks/{quack}/reply', 'QuackController@reply_destroy')->name('reply.destroy');
-Route::resource('quacks', 'QuackController');
+Route::resource('quacks', 'QuackController')->except('create');
+
+Route::get('search', 'SearchController@index')->name('search.index');
 
 Auth::routes();
 

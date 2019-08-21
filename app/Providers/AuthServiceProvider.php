@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Policies\QuackPolicy;
+use App\Quack;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -13,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        Quack::class => QuackPolicy::class,
     ];
 
     /**
@@ -25,6 +27,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('update-quack', 'App\Policies\QuackPolicy@update');
+        Gate::define('delete-quack', 'App\Policies\QuackPolicy@delete');
+        Gate::define('author-delete-quack', 'App\Policies\QuackPolicy@author_delete');
+
     }
 }

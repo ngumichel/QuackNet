@@ -35,28 +35,26 @@
                                                      style="border-width: 2px">
                                                     @endif
                                                     <div class="card-body pb-1">
-                                                        @if($duck)
-                                                            @if($qck->duck->id == $duck->id || $quack->duck_id == $duck->id || $duck->is_admin == 1)
-                                                                <form class="form"
-                                                                      action="{{ route('reply.destroy', $qck) }}"
-                                                                      method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                            class="btn btn-outline-danger btn-sm"
-                                                                            style="float: right">
-                                                                        <i class="fas fa-trash-alt"></i>
-                                                                    </button>
-                                                                </form>
-                                                            @endif
-                                                            @if($qck->duck->id == $duck->id)
-                                                                <a class="btn btn-outline-primary btn-sm mr-2"
-                                                                   style="float: right"
-                                                                   href="{{ route('quacks.edit', $qck) }}">
-                                                                    <i class="fas fa-edit"></i>
-                                                                    Edit
-                                                                </a>
-                                                            @endif
+                                                        @if(Gate::allows('delete-quack', $qck) || Gate::allows('author-delete-quack', $quack))
+                                                            <form class="form"
+                                                                  action="{{ route('quacks.destroy', $qck) }}"
+                                                                  method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                        class="btn btn-outline-danger btn-sm"
+                                                                        style="float: right">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </button>
+                                                            </form>
+                                                        @endif
+                                                        @if(Gate::allows('update-quack', $qck))
+                                                            <a class="btn btn-outline-primary btn-sm mr-2"
+                                                               style="float: right"
+                                                               href="{{ route('quacks.edit', $qck) }}">
+                                                                <i class="fas fa-edit"></i>
+                                                                Edit
+                                                            </a>
                                                         @endif
                                                         <h5 class="card-title">
                                                             <strong>{{ $qck->duck->duckname }}</strong>
@@ -85,7 +83,7 @@
 
                                     <div class="card-footer text-white bg-dark">
                                         <form class="form pl-0 pr-0 pb-2 pt-2" method="POST"
-                                              action="{{ route('reply.store', $quack) }}">
+                                              action="{{ route('quacks.store', $quack) }}">
                                             @csrf
                                             <input type="hidden" name="reply_id" value="{{ $quack->id }}">
                                             <div class="row align-items-center">
