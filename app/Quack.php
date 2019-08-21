@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Quack
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Quack extends Model
 {
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +32,15 @@ class Quack extends Model
      */
     protected $fillable = [
         'content', 'image', 'tags', 'duck_id',
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'deleted_at'
     ];
 
     /**
@@ -55,5 +66,7 @@ class Quack extends Model
     {
         return $this->hasMany('App\Quack', 'parent_id');
     }
+
+
 
 }

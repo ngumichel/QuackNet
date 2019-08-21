@@ -70,7 +70,7 @@ class QuackController extends Controller
         $quack->duck_id = $duck->id;
         $quack->save();
 
-        return redirect()->route('home');
+        return back();
     }
 
     /**
@@ -164,8 +164,7 @@ class QuackController extends Controller
         $qck->duck_id = $duck->id;
         $qck->save();
 
-        $quacks = Quack::with('duck', 'replies')->where('parent_id', $quack->id)->orderByDesc('id')->get();
-        return view('quacks.reply', ['duck' => $duck, 'quack' => $quack, 'quacks' => $quacks]);
+        return back();
     }
 
     /**

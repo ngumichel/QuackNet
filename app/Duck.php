@@ -53,6 +53,15 @@ class Duck extends Authenticatable
     ];
 
     /**
+     * The attributes that are guarded.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'is_admin'
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array

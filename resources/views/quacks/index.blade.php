@@ -9,7 +9,7 @@
                                   placeholder="publish something..."></textarea>
                     </div>
                     <div class="form-group col-2 text-center align-items-center">
-                        <div class="custom-media btn btn-block btn-outline-primary mb-2">
+                        <div class="custom-media btn btn-block btn-outline-primary mb-2" style="border-width: 2px">
                             <i class="fas fa-upload"></i> Media
                             <input type="file" class="form-control-file custom-input" id="image" name="image">
                         </div>

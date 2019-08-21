@@ -19,7 +19,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the application homepage.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -29,4 +29,15 @@ class HomeController extends Controller
         $quacks = Quack::with('duck', 'replies')->where('parent_id', null)->orderByDesc('id')->get();
         return view('home', ['duck' => $duck, 'quacks' => $quacks]);
     }
+
+    /**
+     * Show the application admin page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function admin()
+    {
+        return view('admin');
+    }
+
 }

@@ -15,7 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
+
+Route::get('admin', 'HomeController@admin')->middleware('admin');
 
 Route::get('ducks/password', 'Auth\ChangePasswordController@showChangeForm')->name('ducks.password');
 Route::get('ducks/change', 'Auth\ChangePasswordController@passwordChange')->name('ducks.change');

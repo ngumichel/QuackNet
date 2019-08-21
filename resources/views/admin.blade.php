@@ -29,7 +29,7 @@
         text-align: center;
     }
     .title {
-        font-size: 84px;
+        font-size: 75px;
     }
     .links > a {
         color: #636b6f;
@@ -45,14 +45,13 @@
     }
 </style>
 @section('title')
-    QuackNet Homepage
+    Admin Home
 @endsection
 
 @section('content')
     <div class="content">
         <div class="title m-b-md">
-            QuackNet
+            Hello Admin~
         </div>
     </div>
 @endsection
-

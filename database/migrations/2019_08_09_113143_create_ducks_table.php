@@ -21,6 +21,7 @@ class CreateDucksTable extends Migration
             $table->string('icon')->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->boolean('is_admin')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

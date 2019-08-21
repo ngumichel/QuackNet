@@ -19,6 +19,7 @@ class CreateQuacksTable extends Migration
             $table->string('image')->nullable();
             $table->string('tags')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('quacks');
