@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () {return view('welcome');});
 
 Route::get('home', 'HomeController@index')->name('home');
 
@@ -26,11 +24,8 @@ Route::get('ducks/profile', 'DuckController@profile')->name('ducks.profile');
 Route::get('ducks/profile/edit', 'DuckController@edit')->name('ducks.edit');
 Route::put('ducks/profile/edit', 'DuckController@update')->name('ducks.update');
 
-Route::resource('ducks', 'DuckController')->only([
-    'index', 'show'
-]);
+Route::resource('ducks', 'DuckController')->only(['index', 'show']);
 
-Route::get('quacks/{quack}/reply', 'QuackController@create')->name('reply.create');
 Route::resource('quacks', 'QuackController')->except('create');
 
 Route::get('search', 'SearchController@index')->name('search.index');

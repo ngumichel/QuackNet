@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Duck;
 use App\Quack;
+use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class QuackPolicy
@@ -69,19 +70,7 @@ class QuackPolicy
     }
 
     /**
-     * Determine whether the user can delete the quack.
-     *
-     * @param  \App\Duck  $user
-     * @param  \App\Quack  $quack
-     * @return mixed
-     */
-    public function quthor_delete(Duck $user, Quack $quack)
-    {
-        return $user->id === $quack->duck_id || $user->is_admin === 1;
-    }
-
-    /**
-     * Determine whether the user can delete the quack.
+     * Determine whether the author can delete the quack.
      *
      * @param  \App\Duck  $user
      * @param  \App\Quack  $quack
@@ -89,7 +78,7 @@ class QuackPolicy
      */
     public function author_delete(Duck $user, Quack $quack)
     {
-        return $user->id === $quack->duck_id || $user->is_admin == 1;
+        return $user->id === $quack->duck_id || $user->is_admin === 1;
     }
 
     /**
@@ -115,4 +104,5 @@ class QuackPolicy
     {
         //
     }
+
 }

@@ -54,7 +54,7 @@ class Quack extends Model
     /**
      * Get the quack for the reply post.
      */
-    public function og_quack()
+    public function parent()
     {
         return $this->belongsTo('App\Quack', 'parent_id');
     }
@@ -62,7 +62,7 @@ class Quack extends Model
     /**
      * Get the replies for the quack post.
      */
-    public function replies()
+    public function children()
     {
         return $this->hasMany('App\Quack', 'parent_id');
     }

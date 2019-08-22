@@ -22,9 +22,7 @@ class QuackController extends Controller
      */
     public function index()
     {
-        $duck = Auth::user();
-        $quacks = Quack::with('duck')->get();
-        return view('quacks.index', ['quacks' => $quacks, 'duck' => $duck]);
+        //
     }
 
     /**
@@ -35,9 +33,7 @@ class QuackController extends Controller
      */
     public function create(Quack $quack)
     {
-        $duck = Auth::user();
-        $quacks = Quack::with('duck')->where('parent_id', $quack->id)->get();
-        return view('quacks.reply', ['quack' => $quack, 'quacks' => $quacks, 'duck' => $duck]);
+        //
     }
 
     /**
@@ -81,8 +77,9 @@ class QuackController extends Controller
      */
     public function show(Quack $quack)
     {
-        $quacks = Quack::with('duck')->where('parent_id', $quack->id)->get();
-        return view('quacks.show', ['quack' => $quack, 'quacks' => $quacks]);
+        $duck = Auth::user();
+        $quacks = Quack::with('duck', 'parent', 'children')->where('parent_id', $quack->id)->get();
+        return view('quacks.show', ['quack' => $quack, 'quacks' => $quacks, 'duck' => $duck]);
     }
 
     /**

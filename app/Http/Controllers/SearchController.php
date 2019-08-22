@@ -19,10 +19,9 @@ class SearchController extends Controller
         $keyword = $request->input('search');
 
         $duck = Auth::user();
-
         $qcks = DB::select("SELECT * FROM quacks JOIN ducks ON quacks.duck_id = ducks.id WHERE duckname LIKE '%$keyword%'");
-        $quacks = Quack::hydrate($qcks);
+        $quacks = Quack::hydrate($qcks)->where('deleted_at', null);
         //dd($quacks);
-        return view('search', ['quacks' => $quacks, 'duck' => $duck]);
+        return view('quacks.search', ['quacks' => $quacks, 'duck' => $duck]);
     }
 }
