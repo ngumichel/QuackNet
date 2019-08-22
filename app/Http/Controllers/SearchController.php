@@ -13,15 +13,13 @@ class SearchController extends Controller
     public function index(Request $request) {
 
         $this->validate($request, [
-           'search' => 'required|string'
+           'q' => 'required|string'
         ]);
 
-        $keyword = $request->input('search');
+        $keyword = $request->input('q');
 
         $duck = Auth::user();
-        $qcks = DB::select("SELECT * FROM quacks JOIN ducks ON quacks.duck_id = ducks.id WHERE duckname LIKE '%$keyword%'");
-        $quacks = Quack::hydrate($qcks)->where('deleted_at', null);
-        //dd($quacks);
+        $quacks = DB::select("SELECT * FROM quacks JOIN ducks ON quacks.duck_id = ducks.id WHERE duckname LIKE '%$keyword%' AND deleted_at IS NULL");
         return view('quacks.search', ['quacks' => $quacks, 'duck' => $duck]);
     }
 }

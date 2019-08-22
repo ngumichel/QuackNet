@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 
 class Admin
@@ -15,8 +16,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        dd($request);
-        if (auth()->user()->is_admin == 1) {
+        if (Auth::user()->is_admin == 1) {
             return $next($request);
         }
         return redirect('home')->with('error', 'You don\'t have admin access');

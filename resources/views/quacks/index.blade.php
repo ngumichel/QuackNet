@@ -28,31 +28,26 @@
         <div class="row justify-content-center">
             <div class="card col-8 m-3 p-0">
                 <div class="card-body pb-1">
-                    @if(Gate::allows('delete-quack', $quack))
-                        @include('layouts.delete-btn')
-                    @endif
-                    @if(Gate::allows('update-quack', $quack))
-                        @include('layouts.edit-btn')
-                    @endif
+                    @include('shared.delete-btn', ['og_quack' => $quack])
+                    @include('shared.edit-btn')
                     <h5 class="card-title"><strong>{{ $quack->duck->duckname }}</strong></h5>
                     <p class="card-text" onclick="{{ route('quacks.show', $quack) }}">{{ $quack->content }}</p>
                     @if($quack->image != null)
                         <img src="{{ $quack->image }}" class="card-img-top" style="max-width: 50%" alt="...">
                     @endif
                     <p class="card-text text-right" style="font-size: smaller">
-                        @include('layouts.timestamp')
+                        @include('shared.timestamp')
                     </p>
                 </div>
 
                 <div class="card-footer text-white bg-dark">
-
                     <a class="btn btn-primary btn-sm" style="float: right" href="{{ route('quacks.show', $quack) }}">
                         <i class="fas fa-comment-alt"></i>
                         Reply
                     </a>
                     <a class="text-white" href="{{ route('quacks.show', $quack) }}">
                         <i class="far fa-comment-alt"></i>
-                        {{ $quack->children->count() }}
+                        {{ $quack->children_count }}
                     </a>
                 </div>
             </div>

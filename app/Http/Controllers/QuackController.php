@@ -22,18 +22,7 @@ class QuackController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param Quack $quack
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Quack $quack)
-    {
-        //
+        return redirect('home');
     }
 
     /**
@@ -44,21 +33,22 @@ class QuackController extends Controller
      */
     public function store(Request $request)
     {
-        $duck = Auth::user();
         $quack = new Quack;
         //dd($request);
-        $this->validate($request, [
+        $request->validate([
             'content' => 'required',
             'image' => 'nullable|image',
             'tags' => 'nullable|string',
             'duck_id' => [
                 Rule::exists($quack->getTable(), $quack->getKeyName()),
             ],
-            'parent_id' => [
+            'reply_id' => [
                 Rule::exists($quack->getTable(), $quack->getKeyName()),
             ]
         ]);
-        //dd($request);
+
+        $duck = Auth::user();
+
         $quack->content = $request->input('content');
         $quack->image = $request->input('image');
         $quack->tags = $request->input('tags');
@@ -78,8 +68,8 @@ class QuackController extends Controller
     public function show(Quack $quack)
     {
         $duck = Auth::user();
-        $quacks = Quack::with('duck', 'parent', 'children')->where('parent_id', $quack->id)->get();
-        return view('quacks.show', ['quack' => $quack, 'quacks' => $quacks, 'duck' => $duck]);
+        $quack->load('duck', 'children.parent', 'children.duck');
+        return view('quacks.show', ['quack' => $quack, 'duck' => $duck]);
     }
 
     /**
@@ -90,8 +80,8 @@ class QuackController extends Controller
      */
     public function edit(Quack $quack)
     {
-        $quacks = Quack::with('duck')->where('parent_id', $quack->id)->get();
-        return view('quacks.edit', ['quack' => $quack, 'quacks' => $quacks]);
+        $quack->load('duck', 'children.duck');
+        return view('quacks.edit', ['quack' => $quack,]);
     }
 
 
@@ -104,7 +94,7 @@ class QuackController extends Controller
      */
     public function update(Request $request, Quack $quack)
     {
-        $this->validate($request, [
+        $request->validate([
             'content' => 'required',
             'image' => 'nullable|image',
             'tags' => 'nullable|string',
@@ -127,6 +117,7 @@ class QuackController extends Controller
      */
     public function destroy(Quack $quack)
     {
+        $quack->children()->delete();
         $quack->delete();
         return back()->with('success', 'Quack deleted.');
     }

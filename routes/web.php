@@ -11,14 +11,15 @@
 |
 */
 
-Route::get('/', function () {return view('welcome');});
+
+Route::get('/', 'HomeController@welcome')->name('welcome');
 
 Route::get('home', 'HomeController@index')->name('home');
 
-Route::get('admin', 'HomeController@admin')->middleware('admin');
+Route::get('admin', 'HomeController@admin')->name('admin');
 
 Route::get('ducks/password', 'Auth\ChangePasswordController@showChangeForm')->name('ducks.password');
-Route::get('ducks/change', 'Auth\ChangePasswordController@passwordChange')->name('ducks.change');
+Route::put('ducks/change', 'Auth\ChangePasswordController@passwordChange')->name('ducks.change');
 
 Route::get('ducks/profile', 'DuckController@profile')->name('ducks.profile');
 Route::get('ducks/profile/edit', 'DuckController@edit')->name('ducks.edit');

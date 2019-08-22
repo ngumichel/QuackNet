@@ -44,10 +44,10 @@
                     </li>
                 </ul>
 
-                <form class="form-inline my-2 my-lg-0" action="{{ route('search.index') }}" method="GET" >
-                    @csrf
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                <form class="form-inline my-2 my-lg-0" action="{{ route('search.index') }}" method="GET">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>
+                    </button>
                 </form>
 
                 <!-- Right Side Of Navbar -->
@@ -95,7 +95,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-8 pl-0 pr-0">
-                    @include('flash')
+                    @include('shared.flash')
                 </div>
             </div>
         </div>

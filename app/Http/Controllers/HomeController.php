@@ -15,7 +15,19 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->only('index');
+        $this->middleware('guest')->only('welcome');
+        $this->middleware('admin')->only('admin');
+    }
+
+    /**
+     * Show the application homepage if not connected.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function welcome()
+    {
+        return view('welcome');
     }
 
     /**
@@ -26,7 +38,7 @@ class HomeController extends Controller
     public function index()
     {
         $duck = Auth::user();
-        $quacks = Quack::with('duck', 'parent', 'children')->where('parent_id', null)->orderByDesc('id')->get();
+        $quacks = Quack::with('duck', 'parent')->withCount('children')->where('parent_id', null)->latest()->get();
         return view('home', ['duck' => $duck, 'quacks' => $quacks]);
     }
 
