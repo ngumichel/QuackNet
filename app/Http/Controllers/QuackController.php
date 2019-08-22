@@ -119,7 +119,11 @@ class QuackController extends Controller
     {
         $quack->children()->delete();
         $quack->delete();
-        return back()->with('success', 'Quack deleted.');
+        if ($quack->parent_id == null) {
+            return redirect()->route('home')->with('success', 'Quack deleted.');
+        } else {
+            return back()->with('success', 'Quack deleted.');
+        }
     }
 
 }
