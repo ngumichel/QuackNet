@@ -56,7 +56,7 @@ class QuackController extends Controller
         $quack->duck_id = $duck->id;
         $quack->save();
 
-        return back();
+        return back()->with('success', 'Quack created.');
     }
 
     /**

@@ -13,9 +13,7 @@
 
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
-
 Route::get('home', 'HomeController@index')->name('home');
-
 Route::get('admin', 'HomeController@admin')->name('admin');
 
 Route::get('ducks/password', 'Auth\ChangePasswordController@showChangeForm')->name('ducks.password');
@@ -24,7 +22,6 @@ Route::put('ducks/change', 'Auth\ChangePasswordController@passwordChange')->name
 Route::get('ducks/profile', 'DuckController@profile')->name('ducks.profile');
 Route::get('ducks/profile/edit', 'DuckController@edit')->name('ducks.edit');
 Route::put('ducks/profile/edit', 'DuckController@update')->name('ducks.update');
-
 Route::resource('ducks', 'DuckController')->only(['index', 'show']);
 
 Route::resource('quacks', 'QuackController')->except('create');
@@ -32,5 +29,3 @@ Route::resource('quacks', 'QuackController')->except('create');
 Route::get('search', 'SearchController@index')->name('search.index');
 
 Auth::routes();
-
-
